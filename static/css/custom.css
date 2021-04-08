@@ -1,0 +1,91 @@
+.balloonTd{
+    text-align: center;
+}
+
+.mui-appbar{
+    background-color: #013757;
+    height: 50%;
+}
+
+.mui-btn--green{
+    background-color:#2B7C00;
+    font-size:17px;
+    font-weight:400;
+}
+
+.mui-btn--green2{
+    width: 60%;
+    background-color:#2B7C00;
+    font-size:17px;
+    font-weight:400;
+}
+
+.mui-btn--green:hover{
+     background: #92E565;
+}
+
+.mui-btn--red{
+  background-color:#FF0000;
+  font-size:17px;
+  font-weight:400;
+}
+
+.mui-btn--red:hover{
+     background: #F64E4E;
+}
+
+.mui-btn--blue{
+  width: 250;
+  background-color: #2090D3;
+  font-size:17px;
+  font-weight:400;
+}
+
+.mui-btn--blue:hover{
+    background: #013757
+}
+
+.mui-btn--blue2{
+  background-color: #2090D3;
+  font-size:17px;
+  font-weight:400;
+}
+
+.mui-btn--blue2:hover{
+    background: #013757
+}
+
+.context-wrapper{
+    background-color:#013757;
+}
+
+.wrap {
+    float: left;
+    position: relative;
+    left: 50%;
+}
+
+.content {
+    float: left;
+    position: relative;
+    left: -50%;
+}
+
+.dropdown {
+    display:inline-block;
+    margin:15px;
+    position: static;
+    padding:10px;
+    border:5px;
+    border-radius:100px;
+    font-size:17px;
+    font-weight:400;
+    background:#2196F3;
+    color:#000000;
+}
+
+.dropdown > input{
+    display:none;
+    position:fixed;
+    z-index:-2;
+}
