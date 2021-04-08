@@ -1,0 +1,63 @@
+{% include "WDLG/header.html" %}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/overlay.js' %}">
+
+</script>
+
+<div id="content-wrapper">
+      <div class="mui--text-center">
+        <h1> <img src="{% static 'img/stadium.png' %}" title="city" width="6%" align="middle">  Premier League Stadiums
+      </div>
+
+      <div class="mui--text-center mui-panel">
+        <h4><i class="material-icons">help</i>Premier League 2016-2017 stadiums. Travel to each of them and enjoy the experience </h4>
+        <br>
+        <h4> 1. Select the Premier League team you want.</h4>
+        <h4> 2. Click "Get Stadium" button.</h4>
+        <h4> 3. The application will generate a KML file to show in the Liquid Galaxy.</h4>
+        <h4> 4. Once everything is ready, the application will automatically show you the selected stadium.</h4>
+      </div>
+
+      <br>
+
+      <form method="post" name="combo" action = "{% url 'premierLeague_stadiums' %}">{% csrf_token %}
+        <div class="mui--text-center">
+         <select class = "dropdown" id="combo_list" name="combo_list">
+             <option selected="selected" disabled>Select the team</option>
+             {% for club in clubs_list %}
+                 <option value="{{club}}">
+                     {{club}}
+                 </option>
+             {% endfor %}
+         </select>
+         <input class="mui-btn mui-btn--blue2" style="visibility:visible" onclick="combo_selected_team('{{hash_club_shield}}')" id="get_stadium" type="submit" value="GET STADIUM">
+      </div>
+      </form>
+
+      <div class="mui--text-center">
+        <a class="mui-btn mui-btn--green" width="260px" href="{% url 'start_tour_stadiums' %}"> START PREMIER LEAGUE TOUR </a>
+        <a class="mui-btn mui-btn--red" width="260px" href="{% url 'stop_tour_stadiums' %}"> STOP TOUR </a>
+      </div>
+      <br>
+      <div class="mui--text-center">
+        <tr>
+          <img src={{club_shield_image}} title="shield" width="6%" align="center">
+          <h4> {{club_selected}} - {{stadium_name}} </h4>
+        </tr>
+      </div>
+</div>
+
+<div id="modal" class="modal_premier" style="display: none;"></div>
+  <div id="modal2" class="overlay loading-indicator" style="display: none;">
+    <h2 id="header1" class="mui-m-n">Please wait...</h2>
+    <h2></h2>
+    <h2></h2>
+    <h2></h2>
+    <h2></h2>
+    <img id="image" class="square" src="static/img/white.png" title="shield" width="10%" height="10%">
+    <h2></h2>
+    <h2 id="header2" class="mui-m-n"></h2>
+  </div>
+
+
+{% include "WDLG/footer.html" %}

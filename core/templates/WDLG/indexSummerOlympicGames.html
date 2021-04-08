@@ -1,0 +1,106 @@
+{% include "WDLG/header.html" %}
+{% load static %}
+
+<div id="content-wrapper">
+      <div class="mui--text-center">
+        <h1> <img src="{% static 'img/olympicgames.png' %}" title="games" width="6%" align="middle">  Summer Olympic Games
+      </div>
+
+      <div class="mui--text-center mui-panel">
+        <h4><i class="material-icons">help</i>Consult the latest Summer Olympics Games. All information about them are here! </h4>
+        <br>
+        <h4> 1. Select the Summer Olympic Game you want.</h4>
+        <h4> 2. A KML file will be generated to be showed in the Liquid Galaxy.</h4>
+        <h4> 3. The flight to the city will begin and information will be showed there.</h4>
+        <h4> 4. You can repeat this step the times you want, there are 7 Summer Olympic Games.</h4>
+      </div>
+
+      <br>
+
+      <div class="mui-container-fluid">
+        <div class="mui-row">
+          <div class="mui--text-center">
+            <div class="mui-content">
+              <form method="POST" action="" id="olympicgames_options"> {% csrf_token %}
+                <table class="mui-table mui-table--bordered">
+                  {% for host_city in host_city_list %}
+                  <tbody>
+                    <div class="mui-col-md-4">
+                      <a class="mui-btn mui-btn--blue" value="{{host_city}}" id="get_olympic_game" onclick="javascript:selected_olympicgame_button('{{host_city}}');" > {{host_city}} </a>
+                    </div>
+                  </tbody>
+                  {% endfor %}
+                </table>
+              </form>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="more_olympic_games_info" class="mui-container-fluid" style="display: block; margin-bottom:-50"></div>
+        <img src="" id="image_olympic_game" width="7%" style="float:rigth; margin-bottom:-50; margin-left:-10;"/>
+        <h3 id="host_city" align="center" style="display: none;"> </h3>
+        <table>
+          <tbody>
+            <div class="mui-col-md-12">
+              <h4 style="color:#013757;" id="lema" align="center" style="display: block;"> </h4>
+              <h4 style="color:#013757;" id="number" align="center" display="inline" style="display: block;"> </h4>
+              <h4 style="color:#013757;" id="dates" align="center" style="display: block;"> </h4>
+              <h4 style="color:#013757;" id="stadium_name" align="center" style="display: block;"> </h4>
+            </div>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="modal" class="modal_premier" style="display: none;"></div>
+        <div id="modal2" class="overlay loading-indicator" style="display: none;">
+          <h2 id="header1" class="mui-m-n">Please wait...</h2>
+          <h2></h2>
+
+          <h2 id="header2" class="mui-m-n"></h2>
+          <h2 id="header3" class="mui-m-n"></h2>
+        </div>
+
+</div>
+<script>
+function selected_olympicgame_button(host_city){
+    document.getElementById('modal').style.display = "block";
+    document.getElementById('modal2').style.display = "block";
+    document.getElementById('image').src = "{% static 'img/olympicgames.png' %}";
+    document.getElementById('header2').innerText = "You have selected -> "+host_city+"\n"+"Now it starts the flight to the city.";
+
+    motto = "[ Motto ] : ";
+    num_nations = "[ Nations Participating ] : ";
+    num_athletes = " \t [ Athletes Participating ] : ";
+    num_events = " \t [ Total Events ] : ";
+    opening_date = "[ Opening Date ] : "
+    closing_date = " \t[ Closing Date ] : "
+    stadium_name = "[ Stadium Name ] : "
+
+    const csrfmiddlewaretoken = readCookie('csrftoken');
+    console.info(csrfmiddlewaretoken);
+
+    fetch('/summer_olympic_games_aux', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `csrfmiddlewaretoken=${csrfmiddlewaretoken}&host_city=${host_city}`,
+      credentials: 'include'
+    }).then(function(response) {
+      document.getElementById('modal').style.display = "none";
+      document.getElementById('modal2').style.display = "none";
+      response.json().then(function(data) {
+        document.getElementById('host_city').style.display = "block";
+        document.getElementById('host_city').innerText = host_city;
+        document.getElementById('image_olympic_game').src = data.image_olympic_game;
+        document.getElementById('lema').innerText = motto.concat(data.labels_list[1]);
+        document.getElementById('number').innerText = num_nations.concat(data.labels_list[2]).concat("   ".concat(num_athletes.concat(data.labels_list[3]))).concat("   ".concat(num_events.concat(data.labels_list[4])));
+        document.getElementById('dates').innerText = opening_date.concat(data.labels_list[5]).concat(closing_date.concat(data.labels_list[6]));
+        document.getElementById('stadium_name').innerText = stadium_name.concat(data.labels_list[7]);
+      });
+    });
+}
+</script>
+{% include "WDLG/footer.html" %}
