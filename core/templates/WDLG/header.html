@@ -1,0 +1,76 @@
+{% load static %}
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{% block title %}WDLGV{% endblock %}</title>
+  <link
+    rel="shortcut icon"
+    type="image/png"
+    href="{% static 'img/logo_WDLGV.png' %}"
+  />
+  <link
+    href="//cdn.muicss.com/mui-0.9.17/css/mui.min.css"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//cdn.muicss.com/mui-0.9.17/js/mui.min.js"></script>
+
+  <script src="{% static 'js/overlay.js' %}"></script>
+
+  <link rel="stylesheet" href="{% static 'css/billboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/sideMenu.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/overlay.css' %}" />
+
+  <script type="text/javascript">
+    jQuery(function ($) {
+      var $bodyEl = $("body"),
+        $sidedrawerEl = $("#sidedrawer");
+
+      function showSidedrawer() {
+        // show overlay
+        var options = {
+          onclose: function () {
+            $sidedrawerEl.removeClass("active").appendTo(document.body);
+          },
+        };
+
+        var $overlayEl = $(mui.overlay("on", options));
+
+        // show element
+        $sidedrawerEl.appendTo($overlayEl);
+        setTimeout(function () {
+          $sidedrawerEl.addClass("active");
+        }, 20);
+      }
+
+      function hideSidedrawer() {
+        $bodyEl.toggleClass("hide-sidedrawer");
+      }
+
+      $(".js-show-sidedrawer").on("click", showSidedrawer);
+      $(".js-hide-sidedrawer").on("click", hideSidedrawer);
+
+      var $titleEls = $("strong", $sidedrawerEl);
+
+      $titleEls.next().hide();
+
+      $titleEls.on("click", function () {
+        $(this).next().slideToggle(200);
+      });
+    });
+  </script>
+</head>
+
+{% include "WDLG/sideBarMenu.html" %}
+
+<div class="mui--appbar-height"></div>

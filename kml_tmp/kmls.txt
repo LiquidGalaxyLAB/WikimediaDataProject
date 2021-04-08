@@ -1,3 +1,2 @@
-http://10.160.67.49:8000/static/demos/kml_file_lleida_tour_demo.kml
-http://10.160.67.49:8000/static/demos/kml_file_bayern_tour_demo.kml
-http://10.160.67.49:8000/static/demos/kml_file_summer_olympic_game_92.kml
+http://192.168.0.177:8000/static/kml/kml_file_tour_city.kml?a=1617848344
+http://192.168.0.177:8000/static/utils/earth_rotation_zoom.kml
